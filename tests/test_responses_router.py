@@ -15,7 +15,7 @@ class TestResponsesRouter:
                 "deepseek": ProviderConfig(
                     api_key="sk-test",
                     base_url="https://api.deepseek.com",
-                    model_mapping={"gpt-4.1": "deepseek-chat"},
+                    model_mapping={"gpt-4.1": "deepseek-v4-pro"},
                 )
             },
             default_provider="deepseek",
@@ -24,9 +24,10 @@ class TestResponsesRouter:
         return TestClient(app)
 
     def test_responses_non_streaming(self, client):
+        # Anthropic API format response
         mock_response = {
-            "choices": [{"message": {"role": "assistant", "content": "Hello!"}}],
-            "usage": {"prompt_tokens": 5, "completion_tokens": 2, "total_tokens": 7},
+            "content": [{"type": "text", "text": "Hello!"}],
+            "usage": {"input_tokens": 5, "output_tokens": 2},
         }
         with patch("httpx.AsyncClient.post", new_callable=AsyncMock) as mock_post:
             mock_post.return_value.status_code = 200
@@ -42,10 +43,10 @@ class TestResponsesRouter:
             assert data["output"][0]["content"][0]["text"] == "Hello!"
 
     def test_responses_streaming(self, client):
+        # Anthropic API format SSE events
         sse_lines = [
-            'data: {"choices": [{"delta": {"content": "He"}}]}',
-            'data: {"choices": [{"delta": {"content": "llo"}}]}',
-            "data: [DONE]",
+            'data: {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "He"}}',
+            'data: {"type": "content_block_delta", "delta": {"type": "text_delta", "text": "llo"}}',
         ]
         async def mock_aiter_lines():
             for line in sse_lines:

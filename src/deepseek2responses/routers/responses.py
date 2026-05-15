@@ -22,11 +22,8 @@ def get_converter(config: Config, provider_name: str | None) -> BaseConverter:
         raise HTTPException(status_code=404, detail=f"Provider '{name}' not found")
 
     provider = config.providers[name]
-    # Use AnthropicConverter for deepseekv4 (DeepSeek's Anthropic API format)
-    if name == "deepseekv4":
+    if name == "deepseek":
         return AnthropicConverter(name, provider.api_key, provider.base_url, provider.model_mapping)
-    elif name == "deepseek":
-        return DeepSeekConverter(name, provider.api_key, provider.base_url, provider.model_mapping)
     elif name == "anthropic":
         return AnthropicConverter(name, provider.api_key, provider.base_url, provider.model_mapping)
     else:
@@ -43,8 +40,8 @@ async def create_response(
     converter = get_converter(config, x_provider)
 
     upstream_request = await converter.convert_request(body)
-    # deepseekv4 uses DeepSeek's Anthropic API format: /anthropic/v1/messages
-    if converter.name == "deepseekv4":
+    # deepseek uses DeepSeek's Anthropic API format: /anthropic/v1/messages
+    if converter.name == "deepseek":
         upstream_url = f"{converter.base_url}/anthropic/v1/messages"
     elif converter.name == "anthropic":
         upstream_url = f"{converter.base_url}/v1/messages"
@@ -55,7 +52,7 @@ async def create_response(
         "Content-Type": "application/json",
         "Authorization": f"Bearer {converter.api_key}",
     }
-    if converter.name in ("anthropic", "deepseekv4"):
+    if converter.name in ("anthropic", "deepseek"):
         headers["x-api-key"] = converter.api_key
         headers["anthropic-version"] = "2023-06-01"
         del headers["Authorization"]

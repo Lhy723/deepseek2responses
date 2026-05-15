@@ -3,7 +3,7 @@ server:
   port: 8080
 
 providers:
-  deepseekv4:
+  deepseek:
     api_key: "sk-your-deepseek-key"
     base_url: "https://api.deepseek.com"
     model_mapping:
@@ -11,4 +11,4 @@ providers:
       "gpt-4.1-mini": "deepseek-v4-flash"
       "o3-mini": "deepseek-v4-pro"
 
-default_provider: "deepseekv4"
+default_provider: "deepseek"
