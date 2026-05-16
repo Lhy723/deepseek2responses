@@ -5,6 +5,19 @@ build/
 dist/
 wheels/
 *.egg-info
+.pytest_cache/
 
 # Virtual environments
 .venv
+
+# Local config (contains API keys)
+config.yaml
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Claude
+CLAUDE.md
+.claude/

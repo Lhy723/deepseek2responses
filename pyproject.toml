@@ -1,15 +1,29 @@
 [project]
 name = "deepseek2responses"
 version = "0.1.0"
-description = "Convert DeepSeek/Anthropic API to OpenAI Responses API"
+description = "Convert DeepSeek API to OpenAI Responses API"
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.12"
+authors = [{ name = "Lhy723" }]
+keywords = ["deepseek", "openai", "responses-api", "codex", "proxy"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: Proxy Servers",
+]
 dependencies = [
     "fastapi>=0.136.1",
     "httpx>=0.28.1",
     "pyyaml>=6.0.3",
     "uvicorn>=0.47.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Lhy723/deepseek2responses"
+Repository = "https://github.com/Lhy723/deepseek2responses"
 
 [dependency-groups]
 dev = [
