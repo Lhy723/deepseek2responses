@@ -1,5 +1,7 @@
 <!-- sync with README.md — 中英文保持同步 -->
 
+<p align="right"><a href="README.md">English</a></p>
+
 <h1 align="center">deepseek2responses</h1>
 <p align="center">
   <a href="https://pypi.org/project/deepseek2responses"><img src="https://img.shields.io/pypi/v/deepseek2responses?label=PyPI" alt="PyPI"></a>
