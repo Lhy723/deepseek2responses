@@ -1,34 +1,23 @@
 <!-- sync with README.zh.md — keep both files in sync -->
 
-# deepseek2responses
+<h1 align="center">deepseek2responses</h1>
+<p align="center">
+  <a href="https://pypi.org/project/deepseek2responses"><img src="https://img.shields.io/pypi/v/deepseek2responses?label=PyPI" alt="PyPI"></a>
+  <a href="https://github.com/Lhy723/deepseek2responses"><img src="https://img.shields.io/badge/GitHub-deepseek2responses-blue" alt="GitHub"></a>
+  <a href="https://pypi.org/project/deepseek2responses"><img src="https://img.shields.io/pypi/pyversions/deepseek2responses" alt="Python"></a>
+</p>
+<p align="center">Turn DeepSeek API into an OpenAI Responses API endpoint. <strong>One command install, one command run.</strong></p>
 
-Convert DeepSeek API to OpenAI Responses API. Run locally, plug into any tool that speaks Responses API (Codex, etc.).
+---
 
-## Quick start
+## Quick Start
 
 ```bash
 uv tool install deepseek2responses
 deepseek2responses
 ```
 
-Or from source:
-
-```bash
-git clone https://github.com/Lhy723/deepseek2responses && cd deepseek2responses
-uv tool install .
-deepseek2responses
-```
-
-First run prompts for your DeepSeek API key and saves to `~/.deepseek2responses/config.yaml`. Subsequent runs just `deepseek2responses`.
-
-Or run directly without installing:
-
-```bash
-export DEEPSEEK_API_KEY=sk-your-deepseek-key
-uv run deepseek2responses
-```
-
-Output:
+First run asks for your DeepSeek API key, saves to `~/.deepseek2responses/config.yaml`. After that, just `deepseek2responses`.
 
 ```text
 Proxy API key: dH7kXp2m...
@@ -38,15 +27,15 @@ Endpoint: http://127.0.0.1:19199/v1/responses
 
 ## Configure Codex
 
-Manually edit the two files below, or use [cc-switch](https://github.com/farion1231/cc-switch) to manage providers via GUI.
+Write two files, or use [cc-switch](https://github.com/farion1231/cc-switch) GUI.
 
-**~/.codex/auth.json:**
+`.codex/auth.json`:
 
 ```json
 {"OPENAI_API_KEY": "deepseek"}
 ```
 
-**~/.codex/config.toml:**
+`.codex/config.toml`:
 
 ```toml
 model = "deepseek-v4-pro"
@@ -64,30 +53,22 @@ requires_openai_auth = true
 request_max_retries = 1
 ```
 
-Start proxy:
+Start and use:
 
 ```bash
-uv run deepseek2responses --no-auth
+deepseek2responses --no-auth
+# Completely quit Codex (menu bar → Quit), reopen.
 ```
-
-Then completely quit Codex (menu bar → Quit) and reopen.
 
 ## FAQ
 
-### Codex desktop can't connect (502 Bad Gateway)
+### Codex desktop can't connect (502)
 
-Codex desktop on macOS has local network permission issues. Workaround:
+macOS Codex desktop has local network permission issues. Workaround: turn VPN on → launch Codex → turn VPN off → use normally. Repeat this on every restart.
 
-1. Turn VPN on
-2. Launch Codex desktop
-3. Turn VPN off
-4. Use Codex normally
+## Config
 
-Repeat this flow each time you restart Codex.
-
-## Config file
-
-Config stored at `~/.deepseek2responses/config.yaml`. First run creates it automatically. Edit manually for advanced settings:
+Persisted at `~/.deepseek2responses/config.yaml`. Edit for advanced settings:
 
 ```yaml
 deepseek_api_key: "sk-your-key"
@@ -98,17 +79,25 @@ host: "127.0.0.1"
 #   "gpt-4.1": "deepseek-v4-pro"
 ```
 
-Use `--config` for a custom path.
+## CLI
 
-## CLI options
+| Flag | Description |
+| --- | --- |
+| `--config`, `-c` | Custom config path |
+| `--port`, `-p` | Override port |
+| `--no-auth` | Disable proxy auth |
+| `--version`, `-v` | Print version |
+
+## How It Works
 
 ```text
---config, -c    Path to config file
---port, -p      Override server port
---no-auth       Disable proxy API key auth
---version, -v   Show version
+Codex → POST /v1/responses → deepseek2responses
+  → POST https://api.deepseek.com/v1/chat/completions
+  → convert back → Codex
 ```
 
-## How it works
+Supports streaming, multi-turn conversation, tool calling (including `local_shell`), and DeepSeek V4 reasoning/thinking mode.
 
-Receives OpenAI Responses API requests, converts to DeepSeek Chat Completions API (`/v1/chat/completions`), and converts responses back. Supports multi-turn conversation, tool calling, and thinking/reasoning mode.
+## Requirements
+
+Python 3.12+ | [DeepSeek API key](https://platform.deepseek.com/api_keys)
