@@ -7,7 +7,14 @@ Convert DeepSeek API to OpenAI Responses API. Run locally, plug into any tool th
 ## Quick start
 
 ```bash
-git clone <repo> && cd deepseek2responses
+uv tool install deepseek2responses
+deepseek2responses
+```
+
+Or from source:
+
+```bash
+git clone https://github.com/Lhy723/deepseek2responses && cd deepseek2responses
 uv tool install .
 deepseek2responses
 ```
@@ -67,16 +74,16 @@ Then completely quit Codex (menu bar → Quit) and reopen.
 
 ## FAQ
 
-### Codex 桌面端连不上代理（502 Bad Gateway）
+### Codex desktop can't connect (502 Bad Gateway)
 
-macOS 上 Codex 桌面端存在本地网络权限问题。解决步骤：
+Codex desktop on macOS has local network permission issues. Workaround:
 
-1. 开启 VPN
-2. 启动 Codex 桌面端
-3. 关闭 VPN
-4. 正常使用 Codex
+1. Turn VPN on
+2. Launch Codex desktop
+3. Turn VPN off
+4. Use Codex normally
 
-每次重启 Codex 前都需要重复此流程。
+Repeat this flow each time you restart Codex.
 
 ## Config file
 

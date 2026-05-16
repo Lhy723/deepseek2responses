@@ -7,7 +7,14 @@
 ## 快速开始
 
 ```bash
-git clone <repo> && cd deepseek2responses
+uv tool install deepseek2responses
+deepseek2responses
+```
+
+或从源码安装：
+
+```bash
+git clone https://github.com/Lhy723/deepseek2responses && cd deepseek2responses
 uv tool install .
 deepseek2responses
 ```
