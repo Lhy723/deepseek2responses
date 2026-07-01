@@ -34,10 +34,8 @@ jobs:
         include:
           - os: macos-latest
             target: mac
-            artifact: dmg
           - os: ubuntu-latest
             target: win
-            artifact: exe
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +52,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: desktop-${{ matrix.target }}
-          path: release/*
+          path: |
+            release/*.dmg
+            release/*.exe
+        continue-on-error: true
 
   release:
     needs: [npm-pack, desktop]
