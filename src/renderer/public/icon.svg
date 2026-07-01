@@ -1,45 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
   <title id="title">deepseek2responses icon</title>
-  <desc id="desc">A compact response gateway mark with two endpoints connected by a flowing signal.</desc>
+  <desc id="desc">A minimal monochrome response gateway mark inspired by clean geometric developer-tool icons.</desc>
   <defs>
-    <linearGradient id="bg" x1="120" x2="904" y1="88" y2="936" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#0c1220"/>
-      <stop offset=".55" stop-color="#172033"/>
-      <stop offset="1" stop-color="#203451"/>
-    </linearGradient>
-    <linearGradient id="signal" x1="246" x2="778" y1="512" y2="512" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#69d8ff"/>
-      <stop offset=".48" stop-color="#65f0c8"/>
-      <stop offset="1" stop-color="#7cf36f"/>
-    </linearGradient>
-    <linearGradient id="panel" x1="222" x2="802" y1="278" y2="746" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#dfe8f6"/>
-    </linearGradient>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="28" stdDeviation="34" flood-color="#030712" flood-opacity=".38"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="34" flood-color="#000000" flood-opacity=".12"/>
     </filter>
   </defs>
 
-  <rect width="1024" height="1024" rx="236" fill="url(#bg)"/>
-  <circle cx="512" cy="512" r="330" fill="none" stroke="#ffffff" stroke-opacity=".06" stroke-width="46"/>
+  <rect width="1024" height="1024" rx="236" fill="#ffffff"/>
 
-  <g filter="url(#softShadow)">
-    <rect x="204" y="318" width="214" height="388" rx="92" fill="url(#panel)"/>
-    <rect x="606" y="318" width="214" height="388" rx="92" fill="url(#panel)"/>
-
-    <rect x="276" y="408" width="70" height="208" rx="35" fill="#101827"/>
-    <rect x="678" y="408" width="70" height="208" rx="35" fill="#101827"/>
-
-    <path d="M310 512h404" fill="none" stroke="url(#signal)" stroke-linecap="round" stroke-width="70"/>
-    <path d="M606 424l96 88-96 88" fill="none" stroke="url(#signal)" stroke-linecap="round" stroke-linejoin="round" stroke-width="70"/>
-
-    <circle cx="310" cy="512" r="48" fill="#69d8ff"/>
-    <circle cx="512" cy="512" r="58" fill="#65f0c8"/>
-    <circle cx="714" cy="512" r="48" fill="#7cf36f"/>
-
-    <path d="M512 410v204" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-opacity=".18" stroke-width="28"/>
-    <path d="M448 448h128" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-opacity=".18" stroke-width="28"/>
-    <path d="M448 576h128" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-opacity=".18" stroke-width="28"/>
+  <g filter="url(#shadow)">
+    <path fill="#000000" d="M512 198 818 728H206L512 198Z"/>
   </g>
+
+  <path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="48" d="M392 552h178"/>
+  <path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="m534 482 70 70-70 70"/>
+
+  <path fill="none" stroke="#000000" stroke-linecap="round" stroke-width="42" d="M204 356h148"/>
+  <path fill="none" stroke="#000000" stroke-linecap="round" stroke-width="42" d="M168 452h184"/>
+  <circle cx="204" cy="356" r="24" fill="#000000"/>
+  <circle cx="168" cy="452" r="24" fill="#000000"/>
 </svg>
