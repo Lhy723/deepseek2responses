@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  npm-pack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,10 +22,52 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-tarball
+          path: "*.tgz"
+
+  desktop:
+    needs: npm-pack
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            target: mac
+            artifact: dmg
+          - os: ubuntu-latest
+            target: win
+            artifact: exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Build Electron ${{ matrix.target }}
+        run: npx electron-builder --${{ matrix.target }} --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.target }}
+          path: release/*
+
+  release:
+    needs: [npm-pack, desktop]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: "*"
+          merge-into: artifacts
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}
           generate_release_notes: true
           files: |
-            *.tgz
+            artifacts/**/*

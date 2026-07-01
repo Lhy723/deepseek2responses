@@ -1,8 +1,11 @@
 # Generated files
 node_modules/
+# Build output
 dist/
+release/
 coverage/
 *.tsbuildinfo
+*.tgz
 
 # Logs
 npm-debug.log*
