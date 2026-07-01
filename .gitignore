@@ -1,23 +1,31 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
+# Generated files
+node_modules/
 dist/
-wheels/
-*.egg-info
-.pytest_cache/
+coverage/
+*.tsbuildinfo
 
-# Virtual environments
-.venv
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Local config (contains API keys)
 config.yaml
 
-# IDE
+# IDE / OS
 .idea/
 .vscode/
 .DS_Store
 
-# Claude
+# Local assistant settings
 CLAUDE.md
 .claude/
+
+# Legacy Python artifacts
+__pycache__/
+*.py[oc]
+.pytest_cache/
+.venv/
+wheels/
+*.egg-info

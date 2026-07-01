@@ -1,0 +1,71 @@
+{
+  "name": "deepseek2responses",
+  "version": "0.1.0",
+  "description": "Convert DeepSeek API to OpenAI Responses API with a desktop dashboard",
+  "type": "module",
+  "license": "MIT",
+  "author": "Lhy723",
+  "keywords": [
+    "deepseek",
+    "openai",
+    "responses-api",
+    "codex",
+    "proxy",
+    "electron"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": {
+    "deepseek2responses": "./dist/cli.js",
+    "deepseek2responses-desktop": "./dist/electron/main.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "dev:desktop": "npm run build:electron && concurrently -k \"vite --host 127.0.0.1\" \"wait-on http://127.0.0.1:5173 && VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "build": "npm run build:server && npm run build:renderer && npm run build:electron",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:renderer": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json && cp src/electron/preload.cjs dist/electron/preload.cjs",
+    "typecheck": "tsc --noEmit -p tsconfig.server.json && tsc --noEmit -p tsconfig.electron.json && tsc --noEmit -p tsconfig.renderer.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "node dist/cli.js",
+    "desktop": "electron ."
+  },
+  "main": "dist/electron/main.js",
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/static": "^9.1.3",
+    "commander": "^12.1.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "fastify": "^5.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.13.3",
+    "yaml": "^2.6.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "electron": "^42.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vitest": "^4.1.9",
+    "wait-on": "^8.0.1"
+  },
+  "files": [
+    "assets",
+    "dist",
+    "screenshots",
+    "README.md",
+    "README.zh.md",
+    "config.example.yaml"
+  ]
+}
