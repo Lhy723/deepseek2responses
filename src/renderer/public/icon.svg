@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">deepseek2responses icon</title>
+  <desc id="desc">A minimal bridge mark for converting DeepSeek chat completions into Responses API output.</desc>
+  <defs>
+    <linearGradient id="bg" x1="128" x2="896" y1="96" y2="928" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#121826"/>
+      <stop offset="1" stop-color="#24324f"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="210" x2="814" y1="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#70e1f5"/>
+      <stop offset="1" stop-color="#43e97b"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="32" flood-color="#050816" flood-opacity=".34"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <path fill="#f8fbff" fill-rule="evenodd" d="M258 304c-34 0-62 28-62 62v292c0 34 28 62 62 62h214c34 0 62-28 62-62V366c0-34-28-62-62-62H258Zm24 110c0-14 12-26 26-26h112c14 0 26 12 26 26v196c0 14-12 26-26 26H308c-14 0-26-12-26-26V414Z"/>
+    <path fill="#f8fbff" fill-rule="evenodd" d="M602 304c-34 0-62 28-62 62v292c0 34 28 62 62 62h174c34 0 62-28 62-62V366c0-34-28-62-62-62H602Zm24 110c0-14 12-26 26-26h72c14 0 26 12 26 26v42c0 14-12 26-26 26h-98v-68Zm0 148h98c14 0 26 12 26 26v22c0 14-12 26-26 26h-72c-14 0-26-12-26-26v-48Z"/>
+    <path fill="none" stroke="url(#flow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="58" d="M358 512h184"/>
+    <path fill="none" stroke="url(#flow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="58" d="m520 430 82 82-82 82"/>
+    <circle cx="354" cy="512" r="34" fill="#70e1f5"/>
+    <circle cx="642" cy="512" r="34" fill="#43e97b"/>
+  </g>
+</svg>

@@ -1,40 +1,169 @@
-<!-- sync with README.zh.md — keep both files in sync -->
+<!-- sync with README.zh.md - keep both files in sync -->
 
 <p align="right"><a href="README.zh.md">中文</a></p>
 
-<h1 align="center">deepseek2responses</h1>
 <p align="center">
-  <a href="https://pypi.org/project/deepseek2responses"><img src="https://img.shields.io/pypi/v/deepseek2responses?label=PyPI" alt="PyPI"></a>
-  <a href="https://github.com/Lhy723/deepseek2responses"><img src="https://img.shields.io/badge/GitHub-deepseek2responses-blue" alt="GitHub"></a>
-  <a href="https://pypi.org/project/deepseek2responses"><img src="https://img.shields.io/pypi/pyversions/deepseek2responses" alt="Python"></a>
+  <img src="assets/icon.svg" width="112" height="112" alt="deepseek2responses icon" />
 </p>
-<p align="center">Turn DeepSeek API into an OpenAI Responses API endpoint. <strong>One command install, one command run.</strong></p>
 
----
+<h1 align="center">deepseek2responses</h1>
 
-## Quick Start
+<p align="center">
+  <img src="https://img.shields.io/badge/version-0.1.0-blue?style=flat-square" alt="version" />
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="license" />
+  <img src="https://img.shields.io/badge/build-passing-brightgreen?style=flat-square" alt="build" />
+  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen?style=flat-square" alt="node" />
+</p>
+
+<p align="center">
+  <em>A local DeepSeek to OpenAI Responses API proxy, with an Electron dashboard for token usage and cache analytics.</em>
+</p>
+
+## Project Overview
+
+`deepseek2responses` exposes an OpenAI Responses-compatible endpoint and forwards requests to DeepSeek Chat Completions. It is designed for Codex and other Responses API clients that need predictable local proxy behavior, tool-call conversion, reasoning passback, and `previous_response_id` support.
+
+**Core features:**
+
+- 🚀 **Fast local proxy**: runs on `127.0.0.1`, forwards only the normalized upstream request, and supports streaming SSE
+- 🛠 **Easy to use**: first-run API key wizard, one CLI command, optional desktop dashboard
+- 🔌 **Codex-compatible**: supports function tools, `local_shell`, `custom`, namespace tools, and Responses-style events
+- 📦 **Focused dependencies**: Node.js 20+, Fastify, React, Electron, and small conversion modules
+
+## Demo
+
+<p align="center">
+  <img src="screenshots/dashboard.png" width="90%" alt="deepseek2responses dashboard screenshot" />
+</p>
+
+<details>
+<summary><b>CLI output</b></summary>
+
+```text
+$ deepseek2responses --no-auth
+deepseek2responses v0.1.0
+WARNING: auth disabled (--no-auth)
+Bind:     http://127.0.0.1:19199
+Endpoint: http://127.0.0.1:19199/v1/responses
+Dashboard: http://127.0.0.1:19199/dashboard/
+```
+</details>
+
+## Installation
+
+### Requirements
+
+- Node.js >= 20
+- macOS, Linux, or Windows
+- DeepSeek API key
+
+### Install Methods
+
+<details open>
+<summary><b>Method 1: Install from npm</b></summary>
 
 ```bash
-uv tool install deepseek2responses
+npm install -g deepseek2responses
+deepseek2responses
+```
+</details>
+
+<details>
+<summary><b>Method 2: Install from source</b></summary>
+
+```bash
+git clone https://github.com/Lhy723/deepseek2responses.git
+cd deepseek2responses
+npm install
+npm run build
+npm start
+```
+</details>
+
+## Usage
+
+### Quick Start
+
+```bash
 deepseek2responses
 ```
 
-First run asks for your DeepSeek API key, saves to `~/.deepseek2responses/config.yaml`. After that, just `deepseek2responses`.
+On first run, the CLI asks for your DeepSeek API key and saves it to `~/.deepseek2responses/config.yaml`.
+
+Local endpoints:
 
 ```text
-Proxy API key: dH7kXp2m...
-Bind:     http://0.0.0.0:19199
-Endpoint: http://127.0.0.1:19199/v1/responses
+Proxy:     http://127.0.0.1:19199
+Endpoint:  http://127.0.0.1:19199/v1/responses
+Dashboard: http://127.0.0.1:19199/dashboard/
 ```
 
-## Configure Codex
+Desktop dashboard:
 
-Write two files, or use [cc-switch](https://github.com/farion1231/cc-switch) GUI.
+```bash
+deepseek2responses --desktop
+```
+
+Local Codex testing without proxy authentication:
+
+```bash
+deepseek2responses --no-auth
+```
+
+### Core Concepts
+
+- **Request conversion**: Responses requests are converted into DeepSeek `/v1/chat/completions` payloads.
+- **Reasoning preservation**: Responses `encrypted_content` is round-tripped through DeepSeek `reasoning_content`.
+- **Thinking mode**: DeepSeek V4 thinking is enabled by default. `reasoning.effort = "high"` maps to DeepSeek `"max"`; other efforts map to `"high"`.
+- **Token mapping**: Responses `max_output_tokens` maps to DeepSeek `max_tokens`.
+- **Conversation cache**: `previous_response_id` uses an in-memory cache when `store !== false`.
+- **Tool safety**: unsupported hosted tools and `input_file` fail clearly or are dropped according to config.
+
+### API and Config Reference
+
+<details open>
+<summary><b>Configuration options</b></summary>
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `deepseek_api_key` | `string` | `""` | DeepSeek API key; also used as local proxy bearer token unless `--no-auth` is set |
+| `deepseek_base_url` | `string` | `https://api.deepseek.com/v1` | DeepSeek-compatible upstream base URL |
+| `host` | `string` | `127.0.0.1` | Local Fastify bind host |
+| `port` | `number` | `19199` | Local proxy port |
+| `timeout` | `number` | `300` | Upstream request timeout in seconds |
+| `model_mapping` | `object` | DeepSeek V4 mappings | Client model to upstream model mapping |
+| `max_output_tokens_cap` | `number` | `393216` | Upper bound applied before forwarding `max_output_tokens` |
+| `unsupported_tools` | `"drop" \| "error"` | `drop` | How to handle unsupported hosted tools |
+| `tool_name_sanitize` | `boolean` | `true` | Sanitize function and MCP tool names before upstream calls |
+| `stats_file` | `string` | `~/.deepseek2responses/stats.jsonl` | Append-only request statistics file |
+| `log_file` | `string` | `~/.deepseek2responses/app.log` | Diagnostic log file |
+
+</details>
+
+<details>
+<summary><b>CLI options</b></summary>
+
+| Command | Description |
+|---------|-------------|
+| `deepseek2responses` | Start the local proxy |
+| `deepseek2responses --desktop` | Launch the Electron dashboard |
+| `deepseek2responses --setup` | Print Codex config snippets and exit |
+| `deepseek2responses --config ./config.yaml` | Use a custom config path |
+| `deepseek2responses --port 19199` | Override the configured port |
+| `deepseek2responses --no-auth` | Disable local proxy auth |
+| `deepseek2responses --version` | Print package version |
+
+</details>
+
+### Advanced Usage
+
+<details>
+<summary><b>Configure Codex</b></summary>
 
 `.codex/auth.json`:
 
 ```json
-{"OPENAI_API_KEY": "deepseek"}
+{"OPENAI_API_KEY": "sk-your-deepseek-key"}
 ```
 
 `.codex/config.toml`:
@@ -55,51 +184,83 @@ requires_openai_auth = true
 request_max_retries = 1
 ```
 
-Start and use:
+After changing Codex config, fully quit and reopen Codex.
+</details>
 
-```bash
-deepseek2responses --no-auth
-# Completely quit Codex (menu bar → Quit), reopen.
-```
-
-## FAQ
-
-### Codex desktop can't connect (502)
-
-macOS Codex desktop has local network permission issues. Workaround: turn VPN on → launch Codex → turn VPN off → use normally. Repeat this on every restart.
-
-## Config
-
-Persisted at `~/.deepseek2responses/config.yaml`. Edit for advanced settings:
+<details>
+<summary><b>Example config file</b></summary>
 
 ```yaml
 deepseek_api_key: "sk-your-key"
-host: "127.0.0.1"
+# deepseek_base_url: "https://api.deepseek.com/v1"
+# host: "127.0.0.1"
 # port: 19199
-# api_key: "fixed-proxy-key"
+# timeout: 300
+# max_output_tokens_cap: 393216
+# unsupported_tools: "drop"
+# tool_name_sanitize: true
 # model_mapping:
-#   "gpt-4.1": "deepseek-v4-pro"
+#   "deepseek-v4-pro": "deepseek-v4-pro"
+#   "deepseek-v4-flash": "deepseek-v4-flash"
 ```
 
-## CLI
+Environment variables:
 
-| Flag | Description |
-| --- | --- |
-| `--config`, `-c` | Custom config path |
-| `--port`, `-p` | Override port |
-| `--no-auth` | Disable proxy auth |
-| `--version`, `-v` | Print version |
+| Variable | Description |
+|----------|-------------|
+| `DEEPSEEK2RESPONSES_CONFIG` | Custom config file path |
+| `DEEPSEEK_API_KEY` | Fallback API key when the config file has no key |
 
-## How It Works
+The config file takes precedence over `DEEPSEEK_API_KEY`.
+</details>
 
-```text
-Codex → POST /v1/responses → deepseek2responses
-  → POST https://api.deepseek.com/v1/chat/completions
-  → convert back → Codex
+<details>
+<summary><b>Compatibility notes</b></summary>
+
+Supported:
+
+- `POST /v1/responses` and `/responses`
+- Text input, message arrays, and `instructions`
+- Non-streaming and streaming output
+- `previous_response_id`
+- Function tools, `local_shell`, `custom`, namespace tools, and function call outputs
+- `text.format.type = "json_object"` and degraded `json_schema`
+- Token usage, reasoning tokens, and DeepSeek prompt-cache token stats
+
+Limited or unsupported:
+
+- Hosted tools such as `file_search`, `web_search_preview`, `computer_use_preview`, `code_interpreter`, and `image_generation`
+- `input_file` and image `file_id`
+- Full response management endpoints such as GET, DELETE, and CANCEL
+</details>
+
+## Local Development
+
+```bash
+git clone https://github.com/Lhy723/deepseek2responses.git
+cd deepseek2responses
+
+npm install
+npm run dev -- --config config.yaml --port 19199
+npm test
+npm run typecheck
+npm run build
 ```
 
-Supports streaming, multi-turn conversation, tool calling (including `local_shell`), and DeepSeek V4 reasoning/thinking mode.
+Desktop development:
 
-## Requirements
+```bash
+npm run dev:desktop
+```
 
-Python 3.12+ | [DeepSeek API key](https://platform.deepseek.com/api_keys)
+## License
+
+This project is open source under the [MIT License](./LICENSE).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Lhy723/deepseek2responses&type=Date)](https://star-history.com/#Lhy723/deepseek2responses&Date)
+
+<p align="center">
+  <sub>Built with love by <a href="https://github.com/Lhy723">Lhy723</a></sub>
+</p>

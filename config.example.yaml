@@ -1,8 +1,13 @@
 deepseek_api_key: "sk-your-deepseek-key"
 # deepseek_base_url: "https://api.deepseek.com/v1"  # default
-# host: "0.0.0.0"
+# host: "127.0.0.1"  # default; use "0.0.0.0" to listen on all interfaces
 # port: 19199
-# api_key: "sk-proxy-key"  # auto-generated if not set
+# timeout: 300.0  # upstream request timeout in seconds
+# stats_file: "~/.deepseek2responses/stats.jsonl"  # optional JSONL request statistics
+# log_file: "~/.deepseek2responses/app.log"  # structured proxy logs for debugging
+# max_output_tokens_cap: 393216  # DeepSeek V4 max output cap; lower temporarily for debugging if needed
+# unsupported_tools: "drop"  # error | drop; hosted tools are not supported by DeepSeek Chat Completions
+# tool_name_sanitize: true  # sanitize function/MCP tool names for DeepSeek function-name limits
 # model_mapping:
-#   "gpt-4.1": "deepseek-v4-pro"
-#   "gpt-4.1-mini": "deepseek-v4-flash"
+#   "deepseek-v4-pro": "deepseek-v4-pro"
+#   "deepseek-v4-flash": "deepseek-v4-flash"
