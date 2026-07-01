@@ -1,26 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
   <title id="title">deepseek2responses icon</title>
-  <desc id="desc">A minimal bridge mark for converting DeepSeek chat completions into Responses API output.</desc>
+  <desc id="desc">A compact response gateway mark with two endpoints connected by a flowing signal.</desc>
   <defs>
-    <linearGradient id="bg" x1="128" x2="896" y1="96" y2="928" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#121826"/>
-      <stop offset="1" stop-color="#24324f"/>
+    <linearGradient id="bg" x1="120" x2="904" y1="88" y2="936" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c1220"/>
+      <stop offset=".55" stop-color="#172033"/>
+      <stop offset="1" stop-color="#203451"/>
     </linearGradient>
-    <linearGradient id="flow" x1="210" x2="814" y1="512" y2="512" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#70e1f5"/>
-      <stop offset="1" stop-color="#43e97b"/>
+    <linearGradient id="signal" x1="246" x2="778" y1="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#69d8ff"/>
+      <stop offset=".48" stop-color="#65f0c8"/>
+      <stop offset="1" stop-color="#7cf36f"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="24" stdDeviation="32" flood-color="#050816" flood-opacity=".34"/>
+    <linearGradient id="panel" x1="222" x2="802" y1="278" y2="746" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dfe8f6"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="28" stdDeviation="34" flood-color="#030712" flood-opacity=".38"/>
     </filter>
   </defs>
-  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
-  <g filter="url(#shadow)">
-    <path fill="#f8fbff" fill-rule="evenodd" d="M258 304c-34 0-62 28-62 62v292c0 34 28 62 62 62h214c34 0 62-28 62-62V366c0-34-28-62-62-62H258Zm24 110c0-14 12-26 26-26h112c14 0 26 12 26 26v196c0 14-12 26-26 26H308c-14 0-26-12-26-26V414Z"/>
-    <path fill="#f8fbff" fill-rule="evenodd" d="M602 304c-34 0-62 28-62 62v292c0 34 28 62 62 62h174c34 0 62-28 62-62V366c0-34-28-62-62-62H602Zm24 110c0-14 12-26 26-26h72c14 0 26 12 26 26v42c0 14-12 26-26 26h-98v-68Zm0 148h98c14 0 26 12 26 26v22c0 14-12 26-26 26h-72c-14 0-26-12-26-26v-48Z"/>
-    <path fill="none" stroke="url(#flow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="58" d="M358 512h184"/>
-    <path fill="none" stroke="url(#flow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="58" d="m520 430 82 82-82 82"/>
-    <circle cx="354" cy="512" r="34" fill="#70e1f5"/>
-    <circle cx="642" cy="512" r="34" fill="#43e97b"/>
+
+  <rect width="1024" height="1024" rx="236" fill="url(#bg)"/>
+  <circle cx="512" cy="512" r="330" fill="none" stroke="#ffffff" stroke-opacity=".06" stroke-width="46"/>
+
+  <g filter="url(#softShadow)">
+    <rect x="204" y="318" width="214" height="388" rx="92" fill="url(#panel)"/>
+    <rect x="606" y="318" width="214" height="388" rx="92" fill="url(#panel)"/>
+
+    <rect x="276" y="408" width="70" height="208" rx="35" fill="#101827"/>
+    <rect x="678" y="408" width="70" height="208" rx="35" fill="#101827"/>
+
+    <path d="M310 512h404" fill="none" stroke="url(#signal)" stroke-linecap="round" stroke-width="70"/>
+    <path d="M606 424l96 88-96 88" fill="none" stroke="url(#signal)" stroke-linecap="round" stroke-linejoin="round" stroke-width="70"/>
+
+    <circle cx="310" cy="512" r="48" fill="#69d8ff"/>
+    <circle cx="512" cy="512" r="58" fill="#65f0c8"/>
+    <circle cx="714" cy="512" r="48" fill="#7cf36f"/>
+
+    <path d="M512 410v204" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-opacity=".18" stroke-width="28"/>
+    <path d="M448 448h128" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-opacity=".18" stroke-width="28"/>
+    <path d="M448 576h128" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-opacity=".18" stroke-width="28"/>
   </g>
 </svg>
